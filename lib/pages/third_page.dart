@@ -102,10 +102,19 @@ class _ThirdPageState extends State<ThirdPage> {
                 ),
                 ListTile(title: Text("This statement is from a group of reaserchers from Wuhan Institute of Virology, Chinese Academy of Science they shared that months before the virus happens\nThey also mentniod:\n",style: TextStyle(fontFamily: 'ubuntu-bold',fontSize: 18,color: Colors.white),)),
 
-                //bat statement
-                ListTile(title: Text("\"it is highly likely that future SARS- or MERS-like coronavirusoutbreaks will originate from batss, and there is an increased probability that this will occur in China.\"",style: TextStyle(fontFamily: 'ubuntu-bold',fontSize: 16,color: Colors.white),)),
-                SizedBox(
-                  height: 10,
+                //row of the bat image and text
+                Row(
+                  children: <Widget>[
+                    Container(
+                      width: SizeConfig.blockSizeHorizontal *50,
+                      child:   ListTile(title: Text("\"it is highly likely that future SARS- or MERS-like coronavirusoutbreaks will originate from batss, and there is an increased probability that this will occur in China.\"",style: TextStyle(fontFamily: 'ubuntu-bold',fontSize: 15,color: Colors.white),)),
+                    ),
+
+                    Container(
+                        height: SizeConfig.blockSizeVertical * 20,
+                        width: SizeConfig.blockSizeHorizontal * 50,
+                        child: SvgPicture.asset('images/bat.svg',alignment: Alignment.topRight,allowDrawingOutsideViewBox: true,)),
+                  ],
                 ),
               ],
             ),

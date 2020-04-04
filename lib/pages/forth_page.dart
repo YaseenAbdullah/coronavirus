@@ -39,7 +39,7 @@ class _ForthPageState extends State<ForthPage> {
               ListTile(title: Text("HELP THE WORLD\nTO RECOVER FASTER",style: headingWhiteStyle,)),
               //donation image
               Container(
-                height: SizeConfig.blockSizeVertical * 30,
+                height: SizeConfig.blockSizeVertical * 34,
                 width: SizeConfig.blockSizeHorizontal *95,
                 child: SvgPicture.asset('images/donate.svg'),
               ),
@@ -69,6 +69,7 @@ class _ForthPageState extends State<ForthPage> {
                         onPressed: (){_launchURL();}
 
                     ),
+
 //                    GestureDetector(child: Text("donatecoronavirus@gmail.com",style: headingSubtitleBlackStyle,textAlign: TextAlign.center,),
 //                    onTap: (){
 //                     _launchURL();
@@ -78,12 +79,6 @@ class _ForthPageState extends State<ForthPage> {
                 )
               ),
             ),
-
-
-              Container(
-                  height: SizeConfig.blockSizeVertical * 20,
-                  width: SizeConfig.blockSizeHorizontal * 100,
-                  child: SvgPicture.asset('images/bat.svg',alignment: Alignment.topRight)),
             ],
             ),
           ),
