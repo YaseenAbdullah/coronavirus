@@ -1,19 +1,21 @@
 # Coronavirus App
 
-A coronavirus application with a beautiful and simple UI 
+A coronavirus application with a beautiful and simple UI
 
-## Download apk
-![donwload apk](https://ibb.co/R3QwJ7B)
+![alt text](https://github.com/YaseenAbdullah/coronavirus/blob/master/screenshots/1.png)
+## Download App
+<a href="https://github.com/YaseenAbdullah/coronavirus/blob/master/screenshots/app-release.apk?raw=true"><img src="https://playerzon.com/asset/download.png" width="200"></img></a>
 
-## Getting Started
+- Up to date updates on new cases of coronavirus covid19
+- The history of coronavirus
+- the proper way to stay safe from coronavirus
+- donate and help the world
+### Don't forget to star ⭐ the repo
 
-This project is a starting point for a Flutter application.
+![alt text](https://github.com/YaseenAbdullah/coronavirus/blob/master/screenshots/1.png)
+![alt text](https://github.com/YaseenAbdullah/coronavirus/blob/master/screenshots/1.png)
+![alt text](https://github.com/YaseenAbdullah/coronavirus/blob/master/screenshots/1.png)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[Yaseen Abdullah](https://github.com/YaseenAbdullah) ([Facebook](https://www.facebook.com/yasinyeganeh.MY/))
+([Instagram](https://www.instagram.com/yasin.dev/))
+> If you found this project helpful or you have learned something from the source code and want to thank me, consider buying me a cup of :coffee:

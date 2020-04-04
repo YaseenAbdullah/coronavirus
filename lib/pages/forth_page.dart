@@ -39,7 +39,7 @@ class _ForthPageState extends State<ForthPage> {
               ListTile(title: Text("HELP THE WORLD\nTO RECOVER FASTER",style: headingWhiteStyle,)),
               //donation image
               Container(
-                height: SizeConfig.blockSizeVertical * 34,
+                height: SizeConfig.blockSizeVertical * 30,
                 width: SizeConfig.blockSizeHorizontal *95,
                 child: SvgPicture.asset('images/donate.svg'),
               ),
@@ -59,18 +59,33 @@ class _ForthPageState extends State<ForthPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text("Paypal",textAlign: TextAlign.center,style: headingStyle.copyWith(color: Color(0xff305399),),),
                     )
-                   ,  GestureDetector(child: Text("donatecoronavirus@gmail.com",style: headingSubtitleBlackStyle,textAlign: TextAlign.center,),
-                    onTap: (){
-                     _launchURL();
-                    },
-                    ),
+                   ,
+                    MaterialButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(18.0),
+                            side: BorderSide(color: Color(0xff305399))
+                        ),
+                        child: Text("donatecoronavirus@gmail.com",style: headingSubtitleBlackStyle,textAlign: TextAlign.center,),
+                        onPressed: (){_launchURL();}
 
+                    ),
+//                    GestureDetector(child: Text("donatecoronavirus@gmail.com",style: headingSubtitleBlackStyle,textAlign: TextAlign.center,),
+//                    onTap: (){
+//                     _launchURL();
+//                    },
+//                    ),
                   ],
                 )
               ),
             ),
 
-            ],),
+
+              Container(
+                  height: SizeConfig.blockSizeVertical * 20,
+                  width: SizeConfig.blockSizeHorizontal * 100,
+                  child: SvgPicture.asset('images/bat.svg',alignment: Alignment.topRight)),
+            ],
+            ),
           ),
         ),
       ),
