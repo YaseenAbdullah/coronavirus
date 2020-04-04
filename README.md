@@ -1,6 +1,9 @@
-# coronavirus
+# Coronavirus App
 
-A new Flutter application.
+A coronavirus application with a beautiful and simple UI 
+
+## Download apk
+![donwload apk](https://ibb.co/R3QwJ7B)
 
 ## Getting Started
 
