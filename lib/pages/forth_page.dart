@@ -19,7 +19,7 @@ class _ForthPageState extends State<ForthPage> {
 
   //url launcher
   _launchURL() async {
-    const url = 'https://paypal.me/donatecorona?locale.x=en_US';
+    const url = 'https://www.paypal.com';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

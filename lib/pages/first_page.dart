@@ -7,10 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:coronavirus/column_builder.dart';
 
 bool currentLoading = false;
 bool totalLoading = false;
+bool countriesLoading = false;
 var currentData;
+var countries;
 var totalData;
 
 FirebaseAnalytics analytics = FirebaseAnalytics();
@@ -25,6 +28,7 @@ class FirstPage extends StatefulWidget {
 class _FirstPageState extends State<FirstPage> {
 
 //======================================================
+//current
   Future<Map> getCurrent() async{
     setState(() {
       currentLoading = true;
@@ -43,10 +47,32 @@ class _FirstPageState extends State<FirstPage> {
     var  data = await getCurrent();
     setState(() {
       currentData = data;
-      print(data);
     });
   }
 
+//countries
+  Future<Map> getCountries() async{
+    setState(() {
+      countriesLoading = true;
+    });
+    var url = 'https://covid2019-api.herokuapp.com/countries';
+    http.Response response = await http.get(url);
+    if(response.statusCode == 200){
+      setState(() {
+        countriesLoading = false;
+      });
+      return json.decode(response.body);
+    }
+
+  }
+  void getCountriesData() async{
+    var  c = await getCountries();
+    setState(() {
+      countries = c['countries'];
+    });
+  }
+
+  //total
   Future<Map> getTotal() async{
     setState(() {
       totalLoading = true;
@@ -65,7 +91,6 @@ class _FirstPageState extends State<FirstPage> {
     var  data = await getTotal();
     setState(() {
       totalData = data;
-      print(totalData);
     });
   }
 
@@ -75,15 +100,16 @@ class _FirstPageState extends State<FirstPage> {
     super.initState();
     getCurrentData();
     getTotalData();
+    getCountriesData();
   }
 
   //====================================================
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    print(currentData);
-    print(totalData);
-    TextStyle tableText = TextStyle(fontFamily: 'ubuntu-bold',fontSize: SizeConfig.blockSizeHorizontal * 3.2,color: Color(0xff302E40),);
+    print(countries);
+    TextStyle tableText = TextStyle(fontFamily: 'ubuntu-bold',fontSize: SizeConfig.blockSizeHorizontal * 3.5,color: Color(0xff302E40),);
+    TextStyle tableHeader = TextStyle(fontFamily: 'ubuntu-bold',fontSize: SizeConfig.blockSizeHorizontal * 4.0,color: Color(0xff302E40),);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorObservers: <NavigatorObserver>[observer],
@@ -149,181 +175,45 @@ class _FirstPageState extends State<FirstPage> {
                     ],
                   ),
 
-                  //the table
+                 //table header
                   Padding(
-                    padding: const EdgeInsets.only(top: 20,bottom: 5),
+                    padding: const EdgeInsets.only(top: 20,bottom: 15),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        //countries
-                        Wrap(
-                          direction: Axis.vertical,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          spacing: 5,
-                          children: <Widget>[
-                            Text("Country",style: TextStyle(fontFamily: 'ubuntu-bold',fontSize: SizeConfig.blockSizeHorizontal *4,color: Colors.white),),
-                            Text("China",style: tableText,),
-                            Text("Thailand",style:tableText,),
-                            Text("Japan",style:tableText,),
-                            Text("South Korea",style:tableText,),
-                            Text("Taiwan",style:tableText,),
-                            Text("US",style:tableText,),
-                            Text("Macau",style:tableText,),
-                            Text("Hong Kong",style:tableText,),
-                            Text("Singapore",style:tableText,),
-                            Text("Vietnam",style:tableText,),
-                            Text("France",style:tableText,),
-                            Text("Nepal",style:tableText,),
-                            Text("Malaysia",style:tableText,),
-                            Text("Canada",style:tableText,),
-                            Text("Australia",style:tableText,),
-                            Text("Cambodia",style:tableText,),
-                            Text("Sri Lanka",style:tableText,),
-                            Text("Germany",style:tableText,),
-                            Text("Finland",style:tableText,),
-                            Text("United Arab Emirates",style:tableText,),
-                            Text("Philippines",style:tableText,),
-                            Text("India",style:tableText,),
-                            Text("Italy",style:tableText,),
-                            Text("UK",style:tableText,),
-                            Text("Russia",style:tableText,),
-                            Text("Sweden",style:tableText,),
-                            Text("Spain",style:tableText,),
-                            Text("Belgium",style:tableText,),
-                            Text("Others",style:tableText,),
-
-
-
-
-                          ],
+                        Expanded(child: Text("Countries",style: tableHeader ,textAlign: TextAlign.center,)),
+                        Expanded(child: Text("Confirmed",style: tableHeader ,textAlign: TextAlign.center,),),
+                        Expanded(child: Text("Deaths",style: tableHeader ,textAlign: TextAlign.center,),
                         ),
-                        //confirmed
-                        Wrap(
-                          direction: Axis.vertical,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          spacing: 5,
-                          children: <Widget>[
-                            Text("Confirmed",style: TextStyle(fontFamily: 'ubuntu-bold',fontSize: SizeConfig.blockSizeHorizontal *4,color: Colors.white),),
-                            Text(currentData['Mainland_China']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Thailand']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Japan']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['South_Korea']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Taiwan']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['US']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Macau']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Hong_Kong']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Singapore']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Vietnam']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['France']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Nepal']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Malaysia']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Canada']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Australia']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Cambodia']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Sri_Lanka']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Germany']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Finland']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['United_Arab_Emirates']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Philippines']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['India']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Italy']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['UK']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Russia']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Sweden']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Spain']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Belgium']['confirmed'].toString(),style:tableText,),
-                            Text(currentData['Others']['confirmed'].toString(),style:tableText,),
-
-
-
-
-                          ],
-                        ),
-                        //deaths
-                        Wrap(
-                          direction: Axis.vertical,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          spacing: 5,
-                          children: <Widget>[
-                            Text("Deaths",style: TextStyle(fontFamily: 'ubuntu-bold',fontSize: SizeConfig.blockSizeHorizontal *4,color: Colors.white),),
-                            Text(currentData['Mainland_China']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Thailand']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Japan']['deaths'].toString(),style:tableText,),
-                            Text(currentData['South_Korea']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Taiwan']['deaths'].toString(),style:tableText,),
-                            Text(currentData['US']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Macau']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Hong_Kong']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Singapore']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Vietnam']['deaths'].toString(),style:tableText,),
-                            Text(currentData['France']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Nepal']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Malaysia']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Canada']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Australia']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Cambodia']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Sri_Lanka']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Germany']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Finland']['deaths'].toString(),style:tableText,),
-                            Text(currentData['United_Arab_Emirates']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Philippines']['deaths'].toString(),style:tableText,),
-                            Text(currentData['India']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Italy']['deaths'].toString(),style:tableText,),
-                            Text(currentData['UK']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Russia']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Sweden']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Spain']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Belgium']['deaths'].toString(),style:tableText,),
-                            Text(currentData['Others']['deaths'].toString(),style:tableText,),
-
-
-
-
-                          ],
-                        ),
-                        //recovered
-                        Wrap(
-                          direction: Axis.vertical,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          spacing: 5,
-                          children: <Widget>[
-                            Text("Recovered",style: TextStyle(fontFamily: 'ubuntu-bold',fontSize: SizeConfig.blockSizeHorizontal *4,color: Colors.white),),
-                            Text(currentData['Mainland_China']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Thailand']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Japan']['recovered'].toString(),style:tableText,),
-                            Text(currentData['South_Korea']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Taiwan']['recovered'].toString(),style:tableText,),
-                            Text(currentData['US']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Macau']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Hong_Kong']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Singapore']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Vietnam']['recovered'].toString(),style:tableText,),
-                            Text(currentData['France']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Nepal']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Malaysia']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Canada']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Australia']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Cambodia']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Sri_Lanka']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Germany']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Finland']['recovered'].toString(),style:tableText,),
-                            Text(currentData['United_Arab_Emirates']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Philippines']['recovered'].toString(),style:tableText,),
-                            Text(currentData['India']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Italy']['recovered'].toString(),style:tableText,),
-                            Text(currentData['UK']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Russia']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Sweden']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Spain']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Belgium']['recovered'].toString(),style:tableText,),
-                            Text(currentData['Others']['recovered'].toString(),style:tableText,),
-
-
-
-
-                          ],
+                        Expanded(child: Text("Recovered",style: tableHeader ,textAlign: TextAlign.center,),
                         ),
                       ],
+                    ),
+                  ),
+                  //the table
+                  Padding(
+                    padding: const EdgeInsets.only(bottom:5.0),
+                    child: ColumnBuilder(
+                      itemCount: countries.length,
+                      itemBuilder: (context,index){
+                        return  Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Expanded(child: Text(countries[index].toString().replaceAll('_', " "),style: tableText,textAlign: TextAlign.center,)),
+                                Expanded(child: Text(currentData[countries[index]]['confirmed'].toString(),style: tableText,textAlign: TextAlign.center,)),
+                                Expanded(child: Text(currentData[countries[index]]['deaths'].toString(),style: tableText,textAlign: TextAlign.center,)),
+                                Expanded(child: Text(currentData[countries[index]]['recovered'].toString(),style: tableText,textAlign: TextAlign.center,)),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                          ],
+                        );
+
+                      },
                     ),
                   ),
 
