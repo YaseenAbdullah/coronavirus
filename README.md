@@ -12,6 +12,7 @@ A coronavirus application with a beautiful and simple UI
 - donate and help the world
 ### Don't forget to star ⭐ the repo
 
+#The API is made by Nuttaphat ❤️ ([Github](https://github.com/nat236919))
 ![alt text](https://github.com/YaseenAbdullah/coronavirus/blob/master/screenshots/2.png)
 ![alt text](https://github.com/YaseenAbdullah/coronavirus/blob/master/screenshots/3.png)
 ![alt text](https://github.com/YaseenAbdullah/coronavirus/blob/master/screenshots/4.png)
